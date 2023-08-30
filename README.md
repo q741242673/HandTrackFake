@@ -3,6 +3,8 @@ Fake hand tracking module for visionOS, in order to debug hand tracking on visio
 This module uses VNHumanHandPoseObservation on iPad device to capture finger movement.  
 Then send that hand tracking data to visionOS simulator on Mac via bluetooth.  
 All you need is iPad (or iPhone) and Mac, to debug visionOS hand tracking.  
+  
+- Aug/30/2023: Now TrackingSender works on Mac Catalyst using mac front camera.  
 
 ## HandTrackFake module
 HandTrackFake.swift
