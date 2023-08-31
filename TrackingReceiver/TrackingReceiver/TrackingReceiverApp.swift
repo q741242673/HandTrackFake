@@ -16,7 +16,7 @@ struct TrackingReceiverApp: App {
 		WindowGroup {
 			ContentView()
 		}
-		.defaultSize(width: 100, height: 100)
+		.defaultSize(width: 100, height: 200)
 		.windowStyle(.plain)
 
 		ImmersiveSpace(id: "ImmersiveSpace") {

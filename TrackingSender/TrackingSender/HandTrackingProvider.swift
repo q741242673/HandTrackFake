@@ -50,8 +50,6 @@ class HandTrackingProvider: NSObject {
 	var handJoints: [[[VNRecognizedPoint?]]] = []			// array of fingers of both hand (0:right hand, 1:left hand)
 	private var fingerJoints: [[VNRecognizedPoint?]] = []			// array of finger joint position (VisionKit coordinates) --> FINGER_JOINTS
 
-	let htFake = HandTrackFake()
-
 	init(baseView: UIView? = nil) {
 		super.init()
 
@@ -76,8 +74,8 @@ class HandTrackingProvider: NSObject {
 			NSLog("camera session could not run")
 		}
 
-		if enableHandTrackFake {
-			htFake.initAsAdvertiser()
+		if handTrackFake.enableFake {
+			handTrackFake.initAsAdvertiser()
 		}
 	}
 	
@@ -139,7 +137,7 @@ extension HandTrackingProvider: AVCaptureVideoDataOutputSampleBufferDelegate {
 
 				// HandTrackFake
 				var jsonStr = HandTrackJson2D(handTrackData: handJoints).jsonStr
-				htFake.sendHandTrackData(jsonStr)
+				handTrackFake.sendHandTrackData(jsonStr)
 			}
 		}
 		

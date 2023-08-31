@@ -19,7 +19,7 @@ class HandTrackProcess {
 	var handTracking = HandTrackingProvider()
 
 	func handTrackingStart() async {
-		if enableHandTrackFake == false {
+		if handTrackFake.enableFake == false {
 			do {
 				var auths = HandTrackingProvider.requiredAuthorizations
 				if HandTrackingProvider.isSupported {
@@ -35,13 +35,13 @@ class HandTrackProcess {
 	func publishHandTrackingUpdates(updateJob: @escaping(([[[SIMD3<Scalar>?]]]) -> Void)) async {
 
 		// Fake HandTracking
-		if enableHandTrackFake {
+		if handTrackFake.enableFake {
 			DispatchQueue.main.async {
 				Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
 					var fingerJoints1 = [[SIMD3<Scalar>?]]()
 					var fingerJoints2 = [[SIMD3<Scalar>?]]()
 					if handTrackFake.currentJsonString.count>0 {
-						if let dt3D = HandTrackJson3D(jsonStr: handTrackFake.currentJsonString) {
+						if let dt3D = HandTrackJson3D(jsonStr: handTrackFake.currentJsonString, rotate: handTrackFake.rotateHands) {
 							let handCount = dt3D.handJoints.count
 							if handCount>0 {
 								fingerJoints1 = dt3D.handJoints[0]
@@ -107,7 +107,7 @@ class HandTrackProcess {
 	}
 	
 	func monitorSessionEvents() async {
-		if enableHandTrackFake == false {
+		if handTrackFake.enableFake == false {
 			for await event in session.events {
 				switch event {
 				case .authorizationChanged(let type, let status):

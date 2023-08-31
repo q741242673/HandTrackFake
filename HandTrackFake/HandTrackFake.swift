@@ -12,9 +12,10 @@ import CoreGraphics
 import UIKit
 import Vision
 
-let enableHandTrackFake = true
-
 class HandTrackFake: NSObject {
+	var enableFake = true
+	var rotateHands = false
+
 	private let serviceName = "HandTrackFake"
 	private var advertiserName = "HandTrackFakeSender"
 	private var browserName    = "HandTrackFakeReceiver"
@@ -287,6 +288,7 @@ struct HandTrackJson3D: Codable {
 	typealias Scalar = Float
 
 	var handJoints: [[[SIMD3<Scalar>?]]] = []			// array of fingers of both hand (0:right hand, 1:left hand)
+	var rotateHands: Bool = false
 	
 	// IN : 3D data
 	init(handTrackData: [[[SIMD3<Scalar>?]]]) {
@@ -357,16 +359,17 @@ struct HandTrackJson3D: Codable {
 
 	// Convert VisionKit coordinate on iOS -> world coordinate on visionOS
 	func convertVNRecognizedPointToHandTrackingProvider(p: VNRecognizedPointFake) -> SIMD3<Scalar> {
-		#if targetEnvironment(macCatalyst)
-		return SIMD3(x: Float(p.x-0.7), y:  (Float(p.y)-2.5), z: Float(-2.0))
-		#else
-		return SIMD3(x: Float(p.x-0.7), y: -(Float(p.y)-2.5), z: Float(-2.0))
-		#endif
+		var pp = p
+		if rotateHands {
+			pp.x = -pp.x
+			pp.y = -pp.y
+		}
+		return SIMD3(x: Float(-pp.x)+0.5, y: (Float(pp.y)+1.0), z: Float(-2.0))
 	}
 	
-
 	// IN : Json data (String)
-	init?(jsonStr: String) {
+	init?(jsonStr: String, rotate: Bool = false) {
+		rotateHands = rotate
 		guard let jsonData = jsonStr.data(using: .utf8) else { return nil }
 		guard let dt2D = HandTrackJson2D(json: jsonData) else { return nil }
 		guard dt2D.handJointsFake.count > 0 else { return }

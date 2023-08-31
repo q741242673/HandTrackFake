@@ -13,6 +13,7 @@ import RealityKitContent
 struct ContentView: View {
 
 	@State private var showImmersiveSpace = false
+	@State private var rotateHands = false
 
 	@Environment(\.openImmersiveSpace) var openImmersiveSpace
 	@Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
@@ -25,12 +26,15 @@ struct ContentView: View {
 			Text(logText)
 				.multilineTextAlignment(.leading)
 				.opacity(0.3)
-
 			Toggle("Toggle Immersive", isOn: $showImmersiveSpace)
 				.toggleStyle(.button)
-				.padding(.top, 50)
+				.padding(.top, 10)
 				.opacity(0.3)
-			}
+			Toggle("Hand Rotate", isOn: $rotateHands)
+				.padding(.top, 10)
+				.padding(.bottom, 10)
+				.opacity(0.3)
+		}
 		.onChange(of: showImmersiveSpace) { _, newValue in
 			Task {
 				if newValue {
@@ -41,6 +45,9 @@ struct ContentView: View {
 					await dismissImmersiveSpace()
 				}
 			}
+		}
+		.onChange(of: rotateHands) { _, newValue in
+			handTrackFake.rotateHands = newValue
 		}
 		.task {
 			DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
