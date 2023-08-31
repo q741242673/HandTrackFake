@@ -1,8 +1,7 @@
-import RealityKit
-import Observation
-
-import RealityKitContent
 import Foundation
+import Observation
+import RealityKit
+import RealityKitContent
 import ARKit
 import SceneKit
 

@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+let handTrackFake = HandTrackFake()
+
 @main
 struct TrackingReceiverApp: App {
     var body: some Scene {

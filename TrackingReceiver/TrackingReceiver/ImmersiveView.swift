@@ -6,13 +6,8 @@
 //
 
 import SwiftUI
-#if targetEnvironment(simulator)
 import RealityKit
 import ARKit
-#else
-@preconcurrency import RealityKit
-@preconcurrency import ARKit
-#endif
 import RealityKitContent
 import SceneKit
 import MultipeerConnectivity
@@ -49,13 +44,13 @@ struct ImmersiveView: View {
 	@State var handJoints: [[[SIMD3<Scalar>?]]] = []			// array of fingers of both hand (0:right hand, 1:left hand)
 	var defaultHand = WhichHand.right
 
+	let handTrackProcess: HandTrackProcess = HandTrackProcess()
 	var handModel: HandModel = HandModel()
-	let htFake = HandTrackFake()
 	@State var logText: String = "Ready..."
 
 	init(){
 		textLog("init")
-		htFake.initAsBrowser()
+		handTrackFake.initAsBrowser()
 	}
 	var body: some View {
 		ZStack {
@@ -84,96 +79,24 @@ struct ImmersiveView: View {
 			}
 		}	// ZStack
 		.task {
-			textLog("gestureProvider.publishHandTrackingUpdates")
-			Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
-				processHandPoseObservations(observations: [])
+			await handTrackProcess.handTrackingStart()
+		}
+		.task {
+			textLog("publishHandTrackingUpdates")
+			await handTrackProcess.publishHandTrackingUpdates(updateJob: { (fingerJoints) -> Void in
+				handJoints = fingerJoints
 				displayHandJoints()
-			}
+			})
+		}
+		.task {
+			await handTrackProcess.monitorSessionEvents()
 		}
 	}
 	
-	// MARK: Observation processing
-	func processHandPoseObservations(observations: [HandAnchor?]) {
-
-		var fingerJoints1 = [[SIMD3<Scalar>?]]()
-		var fingerJoints2 = [[SIMD3<Scalar>?]]()
-		
-		var handCount = 0
-		
-		do {
-			if htFake.currentJsonString.count>0 {
-				if let dt3D = HandTrackJson3D(jsonStr: htFake.currentJsonString) {
-					handCount = dt3D.handJoints.count
-					if handCount>0 {
-						fingerJoints1 = dt3D.handJoints[0]
-						print("\(htFake.currentJsonString)")
-					}
-					if handCount>1 {
-						fingerJoints2 = dt3D.handJoints[1]
-					}
-				}
-			}
-			else {
-				handCount = 0
-			}
-
-			// decide which hand is right/left
-			switch handCount {
-			case 1:
-				handJoints.removeAll()
-				handJoints.insert(fingerJoints1, at: defaultHand.rawValue)
-			case 2:
-				let thumbPos1 = jointPosition(hand: fingerJoints1, finger: WhichFinger.thumb.rawValue, joint: WhichJoint.tip.rawValue)
-				let thumbPos2 = jointPosition(hand: fingerJoints2, finger: WhichFinger.thumb.rawValue, joint: WhichJoint.tip.rawValue)
-				guard let pos1=thumbPos1, let pos2=thumbPos2 else {
-					return
-				}
-				handJoints.removeAll()
-				if pos1.x < pos2.x {
-					handJoints.append(fingerJoints2)	// WhichHand.right
-					handJoints.append(fingerJoints1)
-				}
-				else {
-					handJoints.append(fingerJoints1)	// WhichHand.right
-					handJoints.append(fingerJoints2)
-				}
-			default:
-				handJoints.removeAll()
-			}
-			
-		} catch {
-			textLog("Observation processing error.")
-		}
-	}
-
-	// get joint position)
-	func jointPosition(hand: [[SIMD3<Scalar>?]], finger: Int, joint: Int) -> SIMD3<Scalar>? {
-		if finger==WhichFinger.wrist.rawValue {
-			return hand[finger][wristJointIndex]
-		}
-		else {
-			return hand[finger][joint]
-		}
-	}
-	func jointPosition(hand: WhichHand, finger: WhichFinger, joint: WhichJoint) -> SIMD3<Scalar>? {
-		
-		var jnt = joint.rawValue
-		if finger == .wrist { jnt = wristJointIndex }
-
-		switch handJoints.count {
-		case 1:
-			return jointPosition(hand:handJoints[WhichHand.right.rawValue], finger:finger.rawValue, joint:jnt)
-		case 2:
-			return jointPosition(hand:handJoints[hand.rawValue], finger:finger.rawValue, joint:jnt)
-		default:
-			return nil
-		}
-	}
-
 	// Display hand tracking
 	static var lastState = MCSessionState.notConnected
 	func displayHandJoints() {
-		let nowState = htFake.sessionState
+		let nowState = handTrackFake.sessionState
 		if nowState != ImmersiveView.lastState {
 			switch nowState {
 			case .connected:

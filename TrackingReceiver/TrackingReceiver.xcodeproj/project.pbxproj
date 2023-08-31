@@ -15,6 +15,7 @@
 		FFCD12F22A9F462C0099424C /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCD12F12A9F462C0099424C /* ImmersiveView.swift */; };
 		FFCD12F42A9F463D0099424C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFCD12F32A9F463D0099424C /* Assets.xcassets */; };
 		FFCD12F72A9F463D0099424C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFCD12F62A9F463D0099424C /* Preview Assets.xcassets */; };
+		FFF33C702AA013CE0069FA3E /* HandTrackProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF33C6F2AA013CE0069FA3E /* HandTrackProcess.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		FFCD12F32A9F463D0099424C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FFCD12F62A9F463D0099424C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FFCD12F82A9F463D0099424C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FFF33C6F2AA013CE0069FA3E /* HandTrackProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandTrackProcess.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				FFCD12EF2A9F462C0099424C /* ContentView.swift */,
 				FFCD12F12A9F462C0099424C /* ImmersiveView.swift */,
 				FF2191412A9F491100352445 /* HandModel.swift */,
+				FFF33C6F2AA013CE0069FA3E /* HandTrackProcess.swift */,
 				FFCD12FE2A9F46C20099424C /* HandTrackFake */,
 				FFCD12F32A9F463D0099424C /* Assets.xcassets */,
 				FFCD12F82A9F463D0099424C /* Info.plist */,
@@ -171,6 +174,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFF33C702AA013CE0069FA3E /* HandTrackProcess.swift in Sources */,
 				FFCD12F02A9F462C0099424C /* ContentView.swift in Sources */,
 				FF2191422A9F491100352445 /* HandModel.swift in Sources */,
 				FF2191402A9F475F00352445 /* HandTrackFake.swift in Sources */,
