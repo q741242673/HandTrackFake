@@ -1,8 +1,6 @@
 //
 //  HandTrackFake.swift
-//  HandGesture
 //
-//  Created by Yos Hashimoto on 2023/08/27.
 //  Copyright © 2023 Yos. All rights reserved.
 //
 

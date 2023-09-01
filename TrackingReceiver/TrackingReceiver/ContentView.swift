@@ -1,9 +1,7 @@
 //
 //  ContentView.swift
-//  TrackingReceiver
 //  
-//  Created by Yos on 2023
-//  
+//  Copyright © 2023 Yos. All rights reserved.
 //
 
 import SwiftUI

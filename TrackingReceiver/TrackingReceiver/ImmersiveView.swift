@@ -1,8 +1,7 @@
 //
 //  ImmersiveView.swift
-//  VisionGesture
 //
-//  Created by Yos Hashimoto on 2023/08/16.
+//  Copyright © 2023 Yos. All rights reserved.
 //
 
 import SwiftUI

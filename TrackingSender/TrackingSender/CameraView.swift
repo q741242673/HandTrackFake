@@ -1,8 +1,7 @@
 //
 //  CameraView.swift
-//  HandGesture
 //
-//  Created by Ryu Hashimoto on 2023/07/30.
+//  Copyright © 2023 Yos. All rights reserved.
 //
 
 import UIKit

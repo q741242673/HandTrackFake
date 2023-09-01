@@ -1,8 +1,7 @@
 //
 //  HandTrackingProvider.swift
 //
-//
-//  Created by Yos
+//  Copyright © 2023 Yos. All rights reserved.
 //
 
 import Foundation
