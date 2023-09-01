@@ -13,36 +13,9 @@ import MultipeerConnectivity
 
 typealias Scalar = Float
 
+var gestureAloha: Gesture_Aloha?
+
 struct ImmersiveView: View {
-	enum WhichHand: Int {
-		case right = 0
-		case left  = 1
-	}
-	enum WhichFinger: Int {
-		case thumb  = 0
-		case index
-		case middle
-		case ring
-		case little
-		case wrist
-	}
-	enum WhichJoint: Int {
-		case tip = 0	// finger top
-		case dip = 1	// first joint
-		case pip = 2	// second joint
-		case mcp = 3	// third joint
-	}
-	enum WhichJointNo: Int {
-		case top = 0	// finger top
-		case first = 1	// first joint
-		case second = 2	// second joint
-		case third = 3	// third joint
-	}
-	let wristJointIndex = 0
-
-	@State var handJoints: [[[SIMD3<Scalar>?]]] = []			// array of fingers of both hand (0:right hand, 1:left hand)
-	var defaultHand = WhichHand.right
-
 	let handTrackProcess: HandTrackProcess = HandTrackProcess()
 	var handModel: HandModel = HandModel()
 	@State var logText: String = "Ready..."
@@ -70,7 +43,6 @@ struct ImmersiveView: View {
 					.multilineTextAlignment(.leading)
 					.background(Color.blue)
 					.foregroundColor(Color.white)
-					//.font(.system(size: 32))
 					.tag("text_view")
 			}
 			RealityView { content in
@@ -79,12 +51,14 @@ struct ImmersiveView: View {
 		}	// ZStack
 		.task {
 			await handTrackProcess.handTrackingStart()
+			gestureAloha = Gesture_Aloha(delegate: self)
 		}
 		.task {
 			textLog("publishHandTrackingUpdates")
+			// Hand tracking loop
 			await handTrackProcess.publishHandTrackingUpdates(updateJob: { (fingerJoints) -> Void in
-				handJoints = fingerJoints
-				displayHandJoints()
+				displayHandJoints(handJoints: fingerJoints)
+				gestureAloha?.checkGesture(handJoints: fingerJoints)
 			})
 		}
 		.task {
@@ -94,7 +68,7 @@ struct ImmersiveView: View {
 	
 	// Display hand tracking
 	static var lastState = MCSessionState.notConnected
-	func displayHandJoints() {
+	func displayHandJoints(handJoints: [[[SIMD3<Scalar>?]]]) {
 		let nowState = handTrackFake.sessionState
 		if nowState != ImmersiveView.lastState {
 			switch nowState {
@@ -119,10 +93,48 @@ struct ImmersiveView: View {
 			handModel.setHandJoints(left : nil, right: nil)
 			handModel.showFingers()
 		}
-		if handJoints.count < 2 {
-			handJoints.append([])
+		if HandTrackProcess.handJoints.count < 2 {
+			HandTrackProcess.handJoints.append([])
 		}
 	}
+}
+
+// MARK: Gesture delegate job
+
+extension ImmersiveView: GestureDelegate {
+
+	func gesture(gesture: GestureBase, event: GestureDelegateEvent) {
+		if gesture is Gesture_Aloha {
+			handle_gestureAloha(event: event)
+		}
+	}
+	
+	// Aloha
+	func handle_gestureAloha(event: GestureDelegateEvent) {
+		switch event.type {
+		case .Moved2D:
+			break
+		case .Moved3D:
+			textLog("Aloha: gesture 3D")
+//			set_points(pos: event.location as! [SIMD3<Scalar>])
+		case .Moved4D:
+			textLog("Aloha: gesture 4D")
+			if let pnt = event.location[0] as? simd_float4x4 {
+//				viewModel.moveGlove(pnt)
+			}
+		case .Began:
+			break
+		case .Ended:
+			break
+		case .Canceled:
+			break
+		case .Fired:
+			break
+		default:
+			break
+		}
+	}
+
 }
 
 // MARK: Other job
@@ -132,7 +144,6 @@ extension ImmersiveView {
 	func textLog(_ message: String) {
 		DispatchQueue.main.async {
 			logText = message+"\r"+logText
-	//		_ = viewModel.addText(text: message)
 		}
 	}
 
@@ -162,6 +173,8 @@ extension ImmersiveView {
 	}
 
 }
+
+// MARK: Preview
 
 #Preview {
     ImmersiveView()

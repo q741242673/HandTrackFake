@@ -1,5 +1,6 @@
 //
 //  HandModel.swift
+//    Display hand joints in visionOS simulator
 //
 //  Copyright © 2023 Yos. All rights reserved.
 //
@@ -77,22 +78,12 @@ class HandModel {
 			for fingerNo in 0...5 {
 				for jointNo in 0...2 {
 					if fingerNo == 5 && jointNo > 0 { continue }
-					if false {
-						if let sp = handJoints[handNo][fingerNo][jointNo] {
-							if let obj = jointObj[handNo][fingerNo][jointNo] {
-								obj.scale = [0.2, 0.2, 0.2]
-								obj.position = SIMD3(x: sp.x, y: sp.y, z: sp.z)
-							}
-						}
+					var sp = handJoints[handNo][fingerNo][jointNo]
+					var ep = handJoints[handNo][fingerNo][jointNo]
+					if !(fingerNo == 5 && jointNo == 0) {
+						ep = handJoints[handNo][fingerNo][jointNo+1]
 					}
-					else {
-						var sp = handJoints[handNo][fingerNo][jointNo]
-						var ep = handJoints[handNo][fingerNo][jointNo]
-						if !(fingerNo == 5 && jointNo == 0) {
-							ep = handJoints[handNo][fingerNo][jointNo+1]
-						}
-						drawBoneBetween(handNo: handNo, fingerNo: fingerNo, jointNo: jointNo, startPoint: sp, endPoint: ep)
-					}
+					drawBoneBetween(handNo: handNo, fingerNo: fingerNo, jointNo: jointNo, startPoint: sp, endPoint: ep)
 				}
 			}
 		}

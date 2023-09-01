@@ -1,5 +1,6 @@
 //
 //  HandTrackProcess.swift
+//    Manage real/fake hand tracking and make joints array (HandTrackProcess.handJoints)
 //
 //  Copyright © 2023 Yos. All rights reserved.
 //
@@ -12,9 +13,36 @@ import ARKit
 
 class HandTrackProcess {
 
+	enum WhichHand: Int {
+		case right = 0
+		case left  = 1
+	}
+	enum WhichFinger: Int {
+		case thumb  = 0
+		case index
+		case middle
+		case ring
+		case little
+		case wrist
+	}
+	enum WhichJoint: Int {
+		case tip = 0	// finger top
+		case dip = 1	// first joint
+		case pip = 2	// second joint
+		case mcp = 3	// third joint
+	}
+	enum WhichJointNo: Int {
+		case top = 0	// finger top
+		case first = 1	// first joint
+		case second = 2	// second joint
+		case third = 3	// third joint
+	}
+	static let wristJointIndex = 0
+
 	// Real HandTracking (not Fake)
 	let session = ARKitSession()
 	var handTracking = HandTrackingProvider()
+	static var handJoints: [[[SIMD3<Scalar>?]]] = []			// array of fingers of both hand (0:right hand, 1:left hand)
 
 	func handTrackingStart() async {
 		if handTrackFake.enableFake == false {
@@ -30,6 +58,7 @@ class HandTrackProcess {
 		}
 	}
 
+	// Hand tracking loop
 	func publishHandTrackingUpdates(updateJob: @escaping(([[[SIMD3<Scalar>?]]]) -> Void)) async {
 
 		// Fake HandTracking
@@ -51,6 +80,7 @@ class HandTrackProcess {
 						}
 					}
 					// CALLBACK
+					HandTrackProcess.handJoints = [fingerJoints1, fingerJoints2]
 					updateJob([fingerJoints1, fingerJoints2])
 				}
 			}
@@ -98,6 +128,7 @@ class HandTrackProcess {
 				
 				if rightAnchor != nil && leftAnchor != nil {
 					// CALLBACK
+					HandTrackProcess.handJoints = [fingerJoints1, fingerJoints2]
 					updateJob([fingerJoints1, fingerJoints2])
 				}
 			}

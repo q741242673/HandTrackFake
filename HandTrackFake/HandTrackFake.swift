@@ -1,5 +1,10 @@
 //
 //  HandTrackFake.swift
+//    VNHumanHandPoseObservation to capture finger movement.
+//    Encode capture data into Json.
+//    Send Json via Bluetooth (Multipeer connectivity).
+//    Receive Json via Bluetooth.
+//    Decode Json to 3D hand tracking data.
 //
 //  Copyright © 2023 Yos. All rights reserved.
 //

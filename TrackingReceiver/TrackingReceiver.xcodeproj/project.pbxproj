@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		FF2191402A9F475F00352445 /* HandTrackFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF21913F2A9F475F00352445 /* HandTrackFake.swift */; };
 		FF2191422A9F491100352445 /* HandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2191412A9F491100352445 /* HandModel.swift */; };
+		FF42704E2AA19EC1001A0627 /* GestureBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42704D2AA19EC1001A0627 /* GestureBase.swift */; };
+		FF4270502AA1B9FD001A0627 /* Gesture_Aloha.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42704F2AA1B9FD001A0627 /* Gesture_Aloha.swift */; };
 		FFCD12EC2A9F462C0099424C /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = FFCD12EB2A9F462C0099424C /* RealityKitContent */; };
 		FFCD12EE2A9F462C0099424C /* TrackingReceiverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCD12ED2A9F462C0099424C /* TrackingReceiverApp.swift */; };
 		FFCD12F02A9F462C0099424C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCD12EF2A9F462C0099424C /* ContentView.swift */; };
@@ -21,6 +23,8 @@
 /* Begin PBXFileReference section */
 		FF21913F2A9F475F00352445 /* HandTrackFake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HandTrackFake.swift; path = ../../HandTrackFake/HandTrackFake.swift; sourceTree = "<group>"; };
 		FF2191412A9F491100352445 /* HandModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandModel.swift; sourceTree = "<group>"; };
+		FF42704D2AA19EC1001A0627 /* GestureBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureBase.swift; sourceTree = "<group>"; };
+		FF42704F2AA1B9FD001A0627 /* Gesture_Aloha.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gesture_Aloha.swift; sourceTree = "<group>"; };
 		FFCD12E62A9F462C0099424C /* TrackingReceiver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrackingReceiver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFCD12EA2A9F462C0099424C /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		FFCD12ED2A9F462C0099424C /* TrackingReceiverApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingReceiverApp.swift; sourceTree = "<group>"; };
@@ -44,6 +48,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FF4270512AA1C858001A0627 /* Gesture */ = {
+			isa = PBXGroup;
+			children = (
+				FF42704D2AA19EC1001A0627 /* GestureBase.swift */,
+				FF42704F2AA1B9FD001A0627 /* Gesture_Aloha.swift */,
+			);
+			path = Gesture;
+			sourceTree = "<group>";
+		};
 		FFCD12DD2A9F462C0099424C = {
 			isa = PBXGroup;
 			children = (
@@ -67,8 +80,9 @@
 				FFCD12ED2A9F462C0099424C /* TrackingReceiverApp.swift */,
 				FFCD12EF2A9F462C0099424C /* ContentView.swift */,
 				FFCD12F12A9F462C0099424C /* ImmersiveView.swift */,
-				FF2191412A9F491100352445 /* HandModel.swift */,
 				FFF33C6F2AA013CE0069FA3E /* HandTrackProcess.swift */,
+				FF2191412A9F491100352445 /* HandModel.swift */,
+				FF4270512AA1C858001A0627 /* Gesture */,
 				FFCD12FE2A9F46C20099424C /* HandTrackFake */,
 				FFCD12F32A9F463D0099424C /* Assets.xcassets */,
 				FFCD12F82A9F463D0099424C /* Info.plist */,
@@ -175,10 +189,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFF33C702AA013CE0069FA3E /* HandTrackProcess.swift in Sources */,
+				FF4270502AA1B9FD001A0627 /* Gesture_Aloha.swift in Sources */,
 				FFCD12F02A9F462C0099424C /* ContentView.swift in Sources */,
 				FF2191422A9F491100352445 /* HandModel.swift in Sources */,
 				FF2191402A9F475F00352445 /* HandTrackFake.swift in Sources */,
 				FFCD12EE2A9F462C0099424C /* TrackingReceiverApp.swift in Sources */,
+				FF42704E2AA19EC1001A0627 /* GestureBase.swift in Sources */,
 				FFCD12F22A9F462C0099424C /* ImmersiveView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
