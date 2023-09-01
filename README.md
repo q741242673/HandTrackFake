@@ -56,7 +56,7 @@ Bonjour services
  - Decode Json data into hand tracking data (3D).
  - Display hands (finger positions) on visionOS simulator display.
 
-![TrackingReceiverWorkingOnVisionSimulator](https://github.com/AlohaYos/HandTrackFake/assets/4338056/9120b686-951a-4f7d-b85f-9376a5836efe)
+https://github.com/AlohaYos/HandTrackFake/assets/4338056/b7e648ef-9f74-4e36-b17c-6057d46702f9
 
 TrackingReceiverApp.swift
 ```swift
