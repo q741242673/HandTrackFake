@@ -11,6 +11,7 @@
 		FF2191422A9F491100352445 /* HandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2191412A9F491100352445 /* HandModel.swift */; };
 		FF42704E2AA19EC1001A0627 /* GestureBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42704D2AA19EC1001A0627 /* GestureBase.swift */; };
 		FF4270502AA1B9FD001A0627 /* Gesture_Aloha.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42704F2AA1B9FD001A0627 /* Gesture_Aloha.swift */; };
+		FF4270542AA1CE13001A0627 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4270532AA1CE13001A0627 /* ViewModel.swift */; };
 		FFCD12EC2A9F462C0099424C /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = FFCD12EB2A9F462C0099424C /* RealityKitContent */; };
 		FFCD12EE2A9F462C0099424C /* TrackingReceiverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCD12ED2A9F462C0099424C /* TrackingReceiverApp.swift */; };
 		FFCD12F02A9F462C0099424C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCD12EF2A9F462C0099424C /* ContentView.swift */; };
@@ -25,6 +26,7 @@
 		FF2191412A9F491100352445 /* HandModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandModel.swift; sourceTree = "<group>"; };
 		FF42704D2AA19EC1001A0627 /* GestureBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureBase.swift; sourceTree = "<group>"; };
 		FF42704F2AA1B9FD001A0627 /* Gesture_Aloha.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gesture_Aloha.swift; sourceTree = "<group>"; };
+		FF4270532AA1CE13001A0627 /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		FFCD12E62A9F462C0099424C /* TrackingReceiver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrackingReceiver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFCD12EA2A9F462C0099424C /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		FFCD12ED2A9F462C0099424C /* TrackingReceiverApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingReceiverApp.swift; sourceTree = "<group>"; };
@@ -57,6 +59,15 @@
 			path = Gesture;
 			sourceTree = "<group>";
 		};
+		FF4270522AA1CDE6001A0627 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				FF4270532AA1CE13001A0627 /* ViewModel.swift */,
+				FF2191412A9F491100352445 /* HandModel.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
 		FFCD12DD2A9F462C0099424C = {
 			isa = PBXGroup;
 			children = (
@@ -81,7 +92,7 @@
 				FFCD12EF2A9F462C0099424C /* ContentView.swift */,
 				FFCD12F12A9F462C0099424C /* ImmersiveView.swift */,
 				FFF33C6F2AA013CE0069FA3E /* HandTrackProcess.swift */,
-				FF2191412A9F491100352445 /* HandModel.swift */,
+				FF4270522AA1CDE6001A0627 /* Presentation */,
 				FF4270512AA1C858001A0627 /* Gesture */,
 				FFCD12FE2A9F46C20099424C /* HandTrackFake */,
 				FFCD12F32A9F463D0099424C /* Assets.xcassets */,
@@ -189,6 +200,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFF33C702AA013CE0069FA3E /* HandTrackProcess.swift in Sources */,
+				FF4270542AA1CE13001A0627 /* ViewModel.swift in Sources */,
 				FF4270502AA1B9FD001A0627 /* Gesture_Aloha.swift in Sources */,
 				FFCD12F02A9F462C0099424C /* ContentView.swift in Sources */,
 				FF2191422A9F491100352445 /* HandModel.swift in Sources */,

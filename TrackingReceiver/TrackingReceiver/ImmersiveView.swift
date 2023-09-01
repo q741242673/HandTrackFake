@@ -17,7 +17,8 @@ var gestureAloha: Gesture_Aloha?
 
 struct ImmersiveView: View {
 	let handTrackProcess: HandTrackProcess = HandTrackProcess()
-	var handModel: HandModel = HandModel()
+	let handModel = HandModel()
+	let viewModel = ViewModel()
 	@State var logText: String = "Ready..."
 
 	init(){
@@ -47,6 +48,7 @@ struct ImmersiveView: View {
 			}
 			RealityView { content in
 				content.add(handModel.setupContentEntity())
+				content.add(viewModel.setupContentEntity())
 			}
 		}	// ZStack
 		.task {
@@ -59,6 +61,7 @@ struct ImmersiveView: View {
 			await handTrackProcess.publishHandTrackingUpdates(updateJob: { (fingerJoints) -> Void in
 				displayHandJoints(handJoints: fingerJoints)
 				gestureAloha?.checkGesture(handJoints: fingerJoints)
+				// gestureHeart?.checkGesture(handJoints: fingerJoints) // try make other gestures!
 			})
 		}
 		.task {
@@ -112,29 +115,29 @@ extension ImmersiveView: GestureDelegate {
 	// Aloha
 	func handle_gestureAloha(event: GestureDelegateEvent) {
 		switch event.type {
+		case .Moved4D:
+			if let pnt = event.location[0] as? simd_float4x4 {
+				viewModel.moveGlove(pnt)
+			}
+		case .Moved3D:
+			viewModel.setPoints(event.location as! [SIMD3<Scalar>?])
+		case .Fired:
+			if let pnt = event.location[0] as? SIMD3<Scalar> {
+				viewModel.addPoint(pnt)
+			}
+			break
 		case .Moved2D:
 			break
-		case .Moved3D:
-			textLog("Aloha: gesture 3D")
-//			set_points(pos: event.location as! [SIMD3<Scalar>])
-		case .Moved4D:
-			textLog("Aloha: gesture 4D")
-			if let pnt = event.location[0] as? simd_float4x4 {
-//				viewModel.moveGlove(pnt)
-			}
 		case .Began:
 			break
 		case .Ended:
 			break
 		case .Canceled:
 			break
-		case .Fired:
-			break
 		default:
 			break
 		}
 	}
-
 }
 
 // MARK: Other job
@@ -171,7 +174,6 @@ extension ImmersiveView {
 		)
 		return triangleCenterWorldTransform
 	}
-
 }
 
 // MARK: Preview

@@ -1,6 +1,6 @@
 //
 //  Gesture_Aloha.swift
-//    Sample gesture detection : Aloha sign (a.k.a Shaka sign)
+//    Sample gesture detection : Aloha sign (aka Shaka sign)
 //
 //  Copyright © 2023 Yos. All rights reserved.
 //
@@ -45,7 +45,7 @@ class Gesture_Aloha: GestureBase
 				joint2:jointPosition(hand:.right, finger:.little, joint: .tip),
 				joint3:jointPosition(hand:.right, finger:.wrist,  joint: .tip))
 			if let p = pos {
-				delegate?.gesture(gesture: self, event: GestureDelegateEvent(type: .Moved3D, location:[p as Any]))
+				delegate?.gesture(gesture: self, event: GestureDelegateEvent(type: .Fired, location:[p as Any]))
 			}
 			// center vector of the gesture
 			let pos4: simd_float4x4? = triangleCenterWithAxis(
