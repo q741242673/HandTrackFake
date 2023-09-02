@@ -152,7 +152,7 @@ class HandTrackProcess {
 	
 	func cv(a: HandAnchor, j: HandSkeleton.JointName) -> SIMD3<Scalar>? {
 		guard let sk = a.handSkeleton else { return [] }
-		let valSIMD4 = matrix_multiply(a.transform, sk.joint(j).rootTransform).columns.3
+		let valSIMD4 = matrix_multiply(a.originFromAnchorTransform, sk.joint(j).anchorFromJointTransform).columns.3
 		return valSIMD4[SIMD3(0, 1, 2)]
 	}
 	

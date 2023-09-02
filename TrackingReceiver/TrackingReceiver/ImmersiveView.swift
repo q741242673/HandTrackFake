@@ -5,8 +5,8 @@
 //
 
 import SwiftUI
-import RealityKit
 import ARKit
+import RealityKit
 import RealityKitContent
 import SceneKit
 import MultipeerConnectivity
@@ -27,7 +27,6 @@ struct ImmersiveView: View {
 	}
 	var body: some View {
 		ZStack {
-			// TextLog console
 			RealityView { content, attachments in
 				let ent = Entity()
 				ent.scale = [4.0, 4.0, 4.0]
@@ -39,12 +38,13 @@ struct ImmersiveView: View {
 					ent.addChild(textAttachement)
 				}
 			} attachments: {
-				Text(logText)
-					.frame(width: 1000, height: 690, alignment: .topLeading)
-					.multilineTextAlignment(.leading)
-					.background(Color.blue)
-					.foregroundColor(Color.white)
-					.tag("text_view")
+				Attachment(id: "text_view") {
+					Text(logText)
+						.frame(width: 1000, height: 690, alignment: .topLeading)
+						.multilineTextAlignment(.leading)
+						.background(Color.blue)
+						.foregroundColor(Color.white)
+				}
 			}
 			RealityView { content in
 				content.add(handModel.setupContentEntity())
