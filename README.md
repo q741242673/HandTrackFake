@@ -33,13 +33,10 @@ let handTrackFake = HandTrackFake()
 HandTrackingProvider.swift
 ```swift
 // Activate fake data sender
-if handTrackFake.enableFake {
-    handTrackFake.initAsAdvertiser()
-}
+handTrackFake.initAsAdvertiser()
 
 // Send fake data
-let jsonStr = HandTrackJson2D(handTrackData: handJoints).jsonStr
-handTrackFake.sendHandTrackData(jsonStr)
+handTrackFake.sendHandTrackData(handJoints2D)
 ```
 
 Info.plist
@@ -70,19 +67,12 @@ handTrackFake.initAsBrowser()
 
 // Check connection status
 let nowState = handTrackFake.sessionState
+```
 
-// Receive fake data, then convert to 3D hand tracking data
-if handTrackFake.currentJsonString.count>0 {
-    if let dt3D = HandTrackJson3D(jsonStr: handTrackFake.currentJsonString, rotate: handTrackFake.rotateHands) {
-        let handCount = dt3D.handJoints.count
-        if handCount>0 {
-            fingerJoints1 = dt3D.handJoints[0]
-        }
-        if handCount>1 {
-            fingerJoints2 = dt3D.handJoints[1]
-        }
-    }
-}
+HandTrackProcess.swift
+```swift
+// Receive 2D-->3D converted hand tracking data
+let handJoint3D = handTrackFake.receiveHandTrackData()
 ```
 
 Info.plist
