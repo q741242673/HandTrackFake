@@ -11,8 +11,6 @@ import RealityKitContent
 import SceneKit
 import MultipeerConnectivity
 
-typealias Scalar = Float
-
 var gestureAloha: Gesture_Aloha?
 
 struct ImmersiveView: View {

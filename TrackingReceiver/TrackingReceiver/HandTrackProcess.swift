@@ -65,23 +65,10 @@ class HandTrackProcess {
 		if handTrackFake.enableFake {
 			DispatchQueue.main.async {
 				Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
-					var fingerJoints1 = [[SIMD3<Scalar>?]]()
-					var fingerJoints2 = [[SIMD3<Scalar>?]]()
-					if handTrackFake.currentJsonString.count>0 {
-						if let dt3D = HandTrackJson3D(jsonStr: handTrackFake.currentJsonString, rotate: handTrackFake.rotateHands) {
-							let handCount = dt3D.handJoints.count
-							if handCount>0 {
-								fingerJoints1 = dt3D.handJoints[0]
-								print("\(handTrackFake.currentJsonString)")
-							}
-							if handCount>1 {
-								fingerJoints2 = dt3D.handJoints[1]
-							}
-						}
-					}
+					let dt = handTrackFake.receiveHandTrackData()
+					HandTrackProcess.handJoints = dt
 					// CALLBACK
-					HandTrackProcess.handJoints = [fingerJoints1, fingerJoints2]
-					updateJob([fingerJoints1, fingerJoints2])
+					updateJob(dt)
 				}
 			}
 		}
@@ -127,8 +114,8 @@ class HandTrackProcess {
 				}
 				
 				if rightAnchor != nil && leftAnchor != nil {
-					// CALLBACK
 					HandTrackProcess.handJoints = [fingerJoints1, fingerJoints2]
+					// CALLBACK
 					updateJob([fingerJoints1, fingerJoints2])
 				}
 			}

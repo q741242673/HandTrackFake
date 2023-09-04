@@ -15,6 +15,8 @@ import CoreGraphics
 import UIKit
 import Vision
 
+typealias Scalar = Float
+
 class HandTrackFake: NSObject {
 	var enableFake = true
 	var rotateHands = false
@@ -58,6 +60,29 @@ extension HandTrackFake : MCSessionDelegate {
 
 	func isSessionActive() -> Bool {
 		return (sessionState == .connected)
+	}
+
+	func sendHandTrackData(_ handJoints: [[[VNRecognizedPoint?]]]) {
+		let jsonStr = HandTrackJson2D(handTrackData: handJoints).jsonStr
+		handTrackFake.sendHandTrackData(jsonStr)
+	}
+
+	func receiveHandTrackData() -> [[[SIMD3<Scalar>?]]] {
+		var fingerJoints1 = [[SIMD3<Scalar>?]]()
+		var fingerJoints2 = [[SIMD3<Scalar>?]]()
+		if handTrackFake.currentJsonString.count>0 {
+			if let dt3D = HandTrackJson3D(jsonStr: handTrackFake.currentJsonString, rotate: handTrackFake.rotateHands) {
+				let handCount = dt3D.handJoints.count
+				if handCount>0 {
+					fingerJoints1 = dt3D.handJoints[0]
+					print("\(handTrackFake.currentJsonString)")
+				}
+				if handCount>1 {
+					fingerJoints2 = dt3D.handJoints[1]
+				}
+			}
+		}
+		return [fingerJoints1, fingerJoints2]
 	}
 	
 	func sendHandTrackData(_ jsonStr: String) {

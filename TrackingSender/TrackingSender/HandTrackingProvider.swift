@@ -132,11 +132,10 @@ extension HandTrackingProvider: AVCaptureVideoDataOutputSampleBufferDelegate {
 				guard let observations = handPoseRequest.results else {
 					return
 				}
-				processHandPoseObservations(observations: observations)
+				var joints = processHandPoseObservations(observations: observations)
 
 				// HandTrackFake
-				var jsonStr = HandTrackJson2D(handTrackData: handJoints).jsonStr
-				handTrackFake.sendHandTrackData(jsonStr)
+				handTrackFake.sendHandTrackData(joints)
 			}
 		}
 		
@@ -158,7 +157,7 @@ extension HandTrackingProvider: AVCaptureVideoDataOutputSampleBufferDelegate {
 	}
 	
 	// MARK: Observation processing
-	func processHandPoseObservations(observations: [VNHumanHandPoseObservation]) {
+	func processHandPoseObservations(observations: [VNHumanHandPoseObservation]) -> [[[VNRecognizedPoint?]]] {
 
 		var fingerJoints1 = [[VNRecognizedPoint?]]()
 		var fingerJoints2 = [[VNRecognizedPoint?]]()
@@ -183,7 +182,7 @@ extension HandTrackingProvider: AVCaptureVideoDataOutputSampleBufferDelegate {
 				let thumbPos1 = jointPosition(hand: fingerJoints1, finger: WhichFinger.thumb.rawValue, joint: WhichJoint.tip.rawValue)
 				let thumbPos2 = jointPosition(hand: fingerJoints2, finger: WhichFinger.thumb.rawValue, joint: WhichJoint.tip.rawValue)
 				guard let pos1=thumbPos1, let pos2=thumbPos2 else {
-					return
+					return []
 				}
 				handJoints.removeAll()
 				if pos1.x < pos2.x {
@@ -203,6 +202,8 @@ extension HandTrackingProvider: AVCaptureVideoDataOutputSampleBufferDelegate {
 		}
 
 		drawLayer.path = fingerPath	// draw bones
+		
+		return handJoints
 	}
 
 	// get finger joint position array (VisionKit coordinate)
