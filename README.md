@@ -22,8 +22,7 @@ var sessionState: MCSessionState = .notConnected
  - Encode hand tracking data (2D) into Json.
  - Send that Json to TrackingReceiver.app via bluetooth.
 
-![TrackingSenderWorkingOniPhone](https://github.com/AlohaYos/HandTrackFake/assets/4338056/75eeadb2-2e5e-4057-81ad-5af664d021ed)
-
+https://github.com/AlohaYos/HandTrackFake/assets/4338056/0e84ad30-c92b-4d01-9118-038805d15345
 
 AppDelegate.swift
 ```swift
